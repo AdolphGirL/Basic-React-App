@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+
+    <style>
+        .myClass {
+            background-color: brown;
+            width: 65%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <script type="text/babel">
+        const myId = 'kkk'
+
+        const myData = 'Hello World React'
+        const VDOM = (
+            <h1 id={myId} className='myClass' style={{ fontSize: 20 }}>{myData}</h1>
+        )
+
+        ReactDOM.render(VDOM, document.getElementById('test'))
+
+    </script>
+
+    <!--
+        1. 定義虛擬DOM不要使用引號
+        2. 標籤中要使用JS表達式
+            (
+                一個表達式會產生一個值-
+                ex: 
+                    a
+                    a+b
+                    demo(0)
+                    arr.map()
+                    function test(){}
+            )
+            語法，使用{}，
+            但不可以使用js語法(
+                代碼:
+                    if () {}
+                    for(){}
+                    switch(){case ...}
+                    
+            )
+        3. class使用，直接使用，但要使用className
+        4. style寫法，物件方式{fontSize: 20, xxx: xxx}
+        5. 根標籤只能有一個
+        6. 標籤需要閉合
+        7. JSX組件使用大寫命名。小寫則為HTML原tag
+    -->
+</body>
+
+</html>

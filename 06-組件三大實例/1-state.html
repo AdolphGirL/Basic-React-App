@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        // weather。由react生成實例。再由實例調用render
+        class Weather extends React.Component {
+            constructor(props) {
+                super(props)
+
+                // this。需要再super後
+                console.log(this)
+
+                this.state = {
+                    isHot: true
+                }
+
+                // 將原型鏈上的changeWeather取得。並將該方法中的this綁定為目前的實例，並賦值給目前實例，且指定名稱
+                // 前面的this.changeWeather，為指定的名稱；後面的this.changeWeather，是尋找出該實例的方法
+                this.changeWeather = this.changeWeather.bind(this)
+            }
+
+            // render。類的原型對象上
+            render() {
+                const { isHot } = this.state
+
+                // this.changeWeather。找到實例上的changeWeather。但changeWeather在原型鏈上
+                return <h2 onClick={this.changeWeather}>今天天氣是{isHot ? '炎熱' : '涼爽'}</h2>
+            }
+
+            // 類中的方法會開啟局部的嚴格模式，所以該方法中的this為undefine(在沒有處理前)
+            changeWeather() {
+                // setState為React.Component上的方法，且需要透過該方法改變state，react才會認可，自動調用render再次重新渲染畫面
+                this.setState({
+                    isHot: !this.state.isHot
+                })
+            }
+        }
+
+        // React解析組件標籤後，找到了Weather標籤
+        // 發現是用class定義，隨後new一個實例；
+        // 並通過該實例調用render。將render返回的虛擬DOM轉為真實dom
+        ReactDOM.render(<Weather />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 引入proptypes，限制props type -->
+    <script src="../js/prop-types.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Person extends React.Component {
+            render() {
+                // props，只讀不可改
+                const { name, age, sex } = this.props
+                return (
+                    <ul>
+                        <li>{name}</li>
+                        <li>{age}</li>
+                        <li>{sex}</li>
+                    </ul>
+                )
+            }
+        }
+
+        // 限制屬性，propTypes固定的react
+        Person.propTypes = {
+            // name: React.PropTypes.string, 15之後的版本就沒放在react上
+            // 16之後放在prop-types
+            name: PropTypes.string.isRequired,
+            speak: PropTypes.func
+
+        }
+
+        Person.defaultProps = {
+            sex: 'xxx'
+        }
+
+        // {...p}，展開物件，但名稱需要和取得的地方一致；
+        // 這邊要注意在程式碼中的{}為react中，區隔要寫jsx語法的識別。
+        // 按展開語法的規則，...p，單存展開物件是不可以的
+        // 此處可行是因為react加上babel的緣故。且僅適用於標籤屬性
+        const p = { name: 'a', age: 14, speak: speak }
+        ReactDOM.render(<Person {...p} />, document.getElementById('test'))
+        // 不會出錯，但沒有東西
+        console.log('xxx => ', ...p)
+
+        function speak() {
+            console.log('hihi')
+        }
+    </script>
+</body>
+
+</html>

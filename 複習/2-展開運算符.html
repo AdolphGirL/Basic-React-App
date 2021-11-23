@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let a1 = [1, 3, 5, 7, 9]
+        let a2 = [2, 4, 6, 8, 10]
+
+        console.log(...a1)
+        console.log(a1)
+
+        console.log('==================')
+
+        let a3 = [...a1, ...a2]
+        console.log(a3)
+
+        console.log('==================')
+
+        // 使用在傳參上，不固定引數
+        // ...nums會是個array，非展開
+        function sum(...nums) {
+            console.log(nums)
+
+            return nums.reduce((pre, cur) => {
+                return pre + cur;
+            })
+        }
+        console.log(sum(1, 2, 4, 5))
+
+        console.log('==================')
+
+        let p1 = { name: 'a', age: 18 }
+        // 展開不能展開對象
+        // console.log(...p1);
+
+        // 可以外層加上{}表示在對象中展開，將值全部賦予
+        let p2 = { ...p1 }
+        console.log(p2)
+        // 注意p1和p2是不同的stack，因此任一邊變動，另一邊不會連動
+        // 和let p2 = p1不同
+
+        // copy對象，順便修改屬性
+        let p3 = { ...p2, name: 'xx' }
+        console.log(p3)
+
+        // 順便增加屬性(展開運算符的合併)
+        let p4 = { ...p2, address: 'xx' }
+        console.log(p4)
+
+        console.log('==================')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Weather extends React.Component {
+            // 類中可以直接寫賦值語句(不需要加上let or ...；和function不同)
+            // 如果在類中寫賦值語句，直接在類的實例上追加一個屬性
+            // 賦值給state
+            // 名為state 值為obj
+            state = { isHot: false }
+
+            render() {
+                console.log(this)
+                const { isHot } = this.state
+                return <h2 onClick={this.changeWeather}>今天天氣是{isHot ? '炎熱' : '涼爽'}</h2>
+            }
+
+            // 改用箭頭函式，箭頭函式沒有this，但若在函式體裡面寫上this，它會找外層函式的this作為箭頭函式的this
+            changeWeather = () => {
+                this.setState({
+                    isHot: !this.state.isHot
+                })
+            }
+
+            // 此舉雷同上述，會在類的實例追加一個屬性；
+            // 只是將changeWeather設定為函式。但在開始賦值時，this還是undefine
+            // changeWeather = function () {
+            //     this.setState({
+            //         isHot: !this.state.isHot
+            //     })
+            // }
+        }
+
+        ReactDOM.render(<Weather />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1. 類中的構造器，不是必要的；有需要初始化，再進行
+        // 2. 如果A繼承B，且A中寫了構造器，則super是必要寫的
+        // 3. 類中所定義的方法，都放在類的圓型對象上。提供實例使用
+        // 4. 類中的方法，都會開啟局部嚴格模式
+        // 5. 如果在類中寫賦值語句，直接在類的實例上追加一個屬性
+        // 6. 如果在類中寫賦值語句，前面寫上關鍵字static，直接在類上追加一個屬性
+        class Person {
+            // this -> 類的實例對象
+            constructor(name, age) {
+                this.name = name
+                this.age = age;
+            }
+
+            // 存放在原型對象上
+            speak() {
+                // this -> 通過誰調用，就是誰；(因為還有call調用和apply調用的可能)
+                console.log(`${this.name} ${this.age}`)
+            }
+
+            run = () => {
+                console.log(`${this.name} ${this.age}`)
+            }
+
+            // 賦值語句，類的實例上追加一個屬性
+            a = 123
+
+            static b = 456
+        }
+
+        const p1 = new Person('reyes', 10)
+        p1.speak()
+        p1.run()
+
+        const a = {
+            x: 10,
+            y: 20,
+            init: function () {
+                console.log(this)
+                this.x = 20;
+                this.y = 10;
+            }
+        }
+
+        a.init()
+        console.log(a)
+    </script>
+</body>
+
+</html>
