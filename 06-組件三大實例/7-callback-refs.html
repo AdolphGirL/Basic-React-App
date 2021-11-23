@@ -22,7 +22,26 @@
 
     <!-- 初步需要寫 babel -->
     <script type="text/babel">
+        class Demo extends React.Component {
+            render() {
+                // console.log(this)
+                // react new Demo實例後，執行render，發現ref內有callback function。會自動執行
+                // 並將當前節點傳入，將傳入節點賦值給Demo實例的input1
+                return (
+                    <div>
+                        <input ref={c => this.input1 = c} type="text" name="" id="" placeholder="點擊按鈕提示" />&nbsp;
+                        <button onClick={this.showData}>click</button>&nbsp;
+                        <input type="text" name="" id="" placeholder="失去焦點提示" onBlur={this.genData} />&nbsp;
+                    </div>
+                )
+            }
 
+            showData = () => {
+                const { input1 } = this
+                alert(input1.value)
+            }
+
+        }
         ReactDOM.render(<Demo />, document.getElementById('test'))
     </script>
 </body>
