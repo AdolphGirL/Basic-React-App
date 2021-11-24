@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+            // 不能在 function component 上使用 ref，因為他們沒有 instance
+            // React.createRef()，返回一個容器，此容器會儲存被ref所標示的節點(只會有一個，後放的會蓋掉前面的)，官網推薦，但要一直寫很多個
+            // 賦值給myRef，當實例生成時，會追加屬性到實例身上
+            myRef = React.createRef();
+            render() {
+                console.log(this)
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" name="" id="" placeholder="點擊按鈕提示" />&nbsp;
+                        <button onClick={this.showData}>click</button>&nbsp;
+                    </div>
+                )
+            }
+
+            showData = () => {
+                alert(this.myRef.current.value)
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>

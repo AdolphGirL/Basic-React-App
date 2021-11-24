@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+            state = {
+                isHot: true
+            }
+
+            render() {
+                const { isHot } = this.state
+
+                // 官網；如果 ref callback 是被 inline function 所定義的
+                // 會在[更新，重新render]的時候被呼叫兩次，第一次用 null 
+                // 然後再用 DOM element 呼叫一次
+
+                // 當重新render時，ref React 需要將舊的 ref 清掉然後設定新的
+                // 所以第二次才會將節點掛上。
+                // 你可以藉由定義 ref callback 為 class 上的一個 bound method 來避免這種情形
+
+                // 兩種都可以使用。by 官網
+                return (
+                    <div>
+                        <h2>今天天氣很{isHot ? '炎熱' : '涼爽'}</h2>
+
+                        {/* 內聯方式*/}
+                        {/*<input ref={c => { this.input1 = c; console.log('[+] ', c) }} type="text" name="" id="" placeholder="點擊按鈕提示" />&nbsp;*/}
+
+                        {/* 你可以藉由定義 ref callback 為 class 上的一個 bound method 來避免這種情形 */}
+                        <input ref={this.saveInput} type="text" name="" id="" placeholder="點擊按鈕提示" />&nbsp;
+                        <button onClick={this.showData}>click</button>&nbsp;
+                        <button onClick={this.changeWeather}>update</button>&nbsp;
+                    </div>
+                )
+            }
+
+            showData = () => {
+                const { input1 } = this
+                alert(input1.value)
+            }
+
+            changeWeather = () => {
+                this.setState(
+                    { isHot: !this.state.isHot }
+                )
+            }
+
+            saveInput = (c) => {
+                this.input1 = c
+                console.log('[+]', c)
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
