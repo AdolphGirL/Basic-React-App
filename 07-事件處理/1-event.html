@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+            myRef = React.createRef();
+            render() {
+                // onClick，等事件；最後都委託給最外層的元素處理
+                // 可以通過event.target取得發生事件的DOM元素
+                // 不要過度使用ref。當事件與對象都是相同時，可以不要採用ref；例如失去焦點提示的範例
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" name="" id="" placeholder="點擊按鈕提示" />&nbsp;
+                        <button onClick={this.showData}>click</button>&nbsp;
+                        <input onBlur={this.showInfo} type="text" name="" id="" placeholder="失去焦點提示" />&nbsp;
+                    </div>
+                )
+            }
+
+            showData = () => {
+                alert(this.myRef.current.value)
+            }
+
+            showInfo = (e) => {
+                alert(e.target.value)
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
