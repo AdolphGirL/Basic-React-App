@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        // 頁面中所有輸入類的dom，現用現取，就是非受控組件
+        // 現用現取，可以理解為當觸發了某項動作，才去獲取需要的資料
+        // 如同此案例，按下登入按鈕，才去取得輸入資料
+        class Demo extends React.Component {
+
+            usernameRef = React.createRef()
+            pwdRef = React.createRef()
+
+            render() {
+                return (
+                    <form onSubmit={this.handlerSubmit}>
+                        <input ref={this.usernameRef} type="text" name="" id="" />
+                        <input ref={this.pwdRef} type="password" name="" id="" />
+                        <button type="submit">登入</button>
+                    </form>
+                )
+            }
+
+            handlerSubmit = (e) => {
+                e.preventDefault()
+
+                alert(`帳號: ${this.usernameRef.current.value}，密碼: ${this.pwdRef.current.value}`)
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
