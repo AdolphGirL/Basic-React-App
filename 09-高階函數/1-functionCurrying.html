@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        // https://segmentfault.com/a/1190000018265172。function currying
+        // 頁面中所有輸入類的dom，隨著輸入存入狀態中，需要時再重狀態中取出，受控組件
+
+        /**
+         *  高階函數: 符合以下兩點任一
+         *              1. 若A函數，接收的參數是一個函數
+         *              2. 若A函數，調用的返回值依然是一個函數
+         * 
+         *  函數curring: 通過函數調用繼續返回函數的方式，實現多次接收參數，最後統一處理函數編碼形式
+         **/
+        class Demo extends React.Component {
+
+            state = {
+                username: '',
+                pwd: ''
+            }
+
+            render() {
+                return (
+                    <form onSubmit={this.handlerSubmit}>
+                        <input type="text" name="" id="" onChange={this.handlerFormData('username')} />
+                        {/* 
+                            1. 若方法後加上()，render初始化時，就會呼叫該方法
+                            2. 若方法後加上()，則代表是將方法呼叫後的回傳值交給onChange作為call backfunction
+                            3. 因使若要真的使用，則想辦法返回function
+                        <input type="password" name="" id="" onChange={this.saveUserPwd()} />
+                        */}
+                        <button type="submit">登入</button>
+                        <input type="password" name="" id="" onChange={this.handlerFormData('pwd')} />
+                    </form>
+                )
+            }
+
+            handlerFormData = (dataType) => {
+                // console.log(dataType)
+                // 配合，對象的相關知識.html
+                return (e) => {
+                    this.setState({
+                        [dataType]: e.target.value
+                    })
+                    // console.log('[+] event name: ', dataType, '；event target value: ', e.target.value)
+                }
+            }
+
+            handlerSubmit = (e) => {
+                e.preventDefault()
+                console.log(this.state)
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
