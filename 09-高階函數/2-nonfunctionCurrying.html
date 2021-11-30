@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+
+            state = {
+                username: '',
+                pwd: ''
+            }
+
+            render() {
+                return (
+                    <form onSubmit={this.handlerSubmit}>
+                        {/*
+                            改寫，1-functionCurrying.html
+                            onChange需要一個callback function；當賦予callback function後，react會調用該方法，且將事件event傳入
+                        */}
+                        <input type="text" name="" id="" onChange={(e) => { this.handlerFormData('username', e) }} />
+                        <button type="submit">登入</button>
+                        <input type="password" name="" id="" onChange={(e) => { this.handlerFormData('pwd', e) }} />
+                    </form>
+                )
+            }
+
+            handlerFormData = (dataType, e) => {
+                this.setState({
+                    [dataType]: e.target.value
+                })
+            }
+
+            // functionCurrying寫法
+            // handlerFormData = (dataType) => {
+            //     return (e) => {
+            //         this.setState({
+            //             [dataType]: e.target.value
+            //         })
+            //     }
+            // }
+
+            handlerSubmit = (e) => {
+                e.preventDefault()
+                console.log(this.state)
+            }
+
+        }
+
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
