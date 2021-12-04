@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+            state = { opacity: 1 }
+
+            // 這邊是按鈕的callback funtion，所以採取腹值語句 + 箭頭函式寫法
+            // 將此方法設定給Demo實例對象上
+            death = () => {
+                // 卸載組件
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+
+            // 原理同render，因此也是經由react使用Demo的實例，調用
+            // 只會執行一次
+            componentDidMount() {
+                console.log('[+] componentDidMount ...')
+
+                this.timer = setInterval(() => {
+                    let { opacity } = this.state
+                    opacity -= 0.1
+                    if (opacity <= 0) {
+                        opacity = 1
+                    }
+                    this.setState({ opacity })
+                }, 200)
+            }
+
+            // 原理同render，因此也是經由react使用Demo的實例，調用
+            // 只會執行一次
+            componentWillUnmount() {
+                console.log('[+] componentWillUnmount ...')
+
+                clearInterval(this.timer)
+            }
+
+            // render會經由react使用Demo的實例，調用。因此其內部的this是Demo的實例
+            // 因此不需要寫成賦值語句的方式
+            render() {
+                console.log('[+] render ...')
+
+                return (
+                    <div>
+                        <h2 style={{ opacity: this.state.opacity }}>React學不會，怎麼辦</h2>
+                        <button onClick={this.death}>不活了</button>
+                    </div>
+                )
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
