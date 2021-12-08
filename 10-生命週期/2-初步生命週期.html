@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello React</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <!-- react 核心庫需要先引入-->
+    <script src="../js/react.development.js"></script>
+
+    <!-- react 操作 dom -->
+    <script src="../js/react-dom.development.js"></script>
+
+    <!-- babel 轉義 jsx to js -->
+    <script src="../js/babel.min.js"></script>
+
+    <!-- 初步需要寫 babel -->
+    <!-- 標準寫法 -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+            constructor(props) {
+                console.log('[+] constructor ... ')
+                super(props)
+                this.state = {
+                    nums: 0
+                }
+            }
+
+            componentWillMount() {
+                console.log('[+] componentWillMount ...')
+            }
+
+            componentDidMount() {
+                console.log('[+] componentDidMount ...')
+            }
+
+            componentWillUnmount() {
+                console.log('[+] componentWillUnmount ...')
+            }
+
+            shouldComponentUpdate() {
+                console.log('[+] shouldComponentUpdate ...')
+                return true
+            }
+
+            componentWillUpdate() {
+                console.log('[+] componentWillUpdate ...')
+            }
+
+            componentDidUpdate() {
+                console.log('[+] componentDidUpdate ...')
+            }
+
+            render() {
+                console.log('[+] render ...')
+                const { nums } = this.state
+                return (
+                    <div>
+                        <h2>求和為: {nums}</h2>
+                        <button onClick={this.addNum}>點我加1</button>
+                        <button onClick={this.death}>點我卸載</button>
+                        <button onClick={this.forceUpdateM}>強制更新</button>
+                    </div>
+                )
+            }
+
+            addNum = () => {
+                const { nums } = this.state
+                this.setState({ nums: nums + 1 })
+            }
+
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+
+            forceUpdateM = () => {
+                this.forceUpdate()
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>
