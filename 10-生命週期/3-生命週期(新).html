@@ -32,8 +32,17 @@
                 }
             }
 
-            componentWillMount() {
-                console.log('[+] componentWillMount ...')
+            // 不管是在首次 mount 時或後續的更新時。
+            // 它應該回傳一個 object 以更新 state，
+            // 或回傳 null 以表示不需要更新任何 state。
+            // 這個方法是為了某些很少見的例子而存在的，
+            // 像是有時 state 會依賴 prop 在一段時間過後所產生的改變
+            static getDerivedStateFromProps(props, state) {
+                console.log('[+] getDerivedStateFromProps，props :>> ', props);
+                console.log('[+] getDerivedStateFromProps，state :>> ', state);
+                // 一旦返回狀態對象(如果和原先的state的key相同，則會覆蓋目前的state)
+                // 就會直接影響state的資料
+                return props
             }
 
             componentDidMount() {
@@ -47,10 +56,6 @@
             shouldComponentUpdate() {
                 console.log('[+] shouldComponentUpdate ...')
                 return true
-            }
-
-            componentWillUpdate() {
-                console.log('[+] componentWillUpdate ...')
             }
 
             componentDidUpdate() {
@@ -84,7 +89,7 @@
             }
 
         }
-        ReactDOM.render(<Demo />, document.getElementById('test'))
+        ReactDOM.render(<Demo name={"tom"} />, document.getElementById('test'))
 
     </script>
 </body>
