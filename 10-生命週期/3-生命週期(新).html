@@ -42,7 +42,8 @@
                 console.log('[+] getDerivedStateFromProps，state :>> ', state);
                 // 一旦返回狀態對象(如果和原先的state的key相同，則會覆蓋目前的state)
                 // 就會直接影響state的資料
-                return props
+                // return props
+                return null
             }
 
             componentDidMount() {
@@ -58,6 +59,13 @@
                 return true
             }
 
+            getSnapshotBeforeUpdate(prevProps, prevState) {
+                console.log('[+] getSnapshotBeforeUpdate prevProps :>> ', prevProps);
+                console.log('[+] getSnapshotBeforeUpdate prevState :>> ', prevState);
+                return null
+            }
+
+            // componentDidUpdate(prevProps, prevState, snapshot)
             componentDidUpdate() {
                 console.log('[+] componentDidUpdate ...')
             }
